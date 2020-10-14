@@ -1,0 +1,98 @@
+<apex:page docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" controller="GuidedCPQController">
+    <head>
+        <apex:slds />
+        <apex:includeLightning />
+    </head>
+    <style type="text/css">
+        p { font-weight: bold; }
+        grid--frame, .via-slds .slds-grid_frame {
+        min-height: calc(100vh - 75px) !important;
+        }
+        .vlocity.via-slds .cpq-container {
+        padding: 16px 8px;
+        height: calc(100vh - 75px) !important;
+        }
+        .cpq-base-header {
+        display:none !important;
+        }
+    </style>    
+	<div class="slds-scope" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:form >
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-opportunity" title="Cart Icon">
+                                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#quotes')}" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate" title="Rohde Corp - 80,000 Widgets">{!Name}</span>
+                                    </h1>
+                                </div>
+                            </div>
+                            <p class="slds-page-header__name-meta">{!Status}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="UCF Wizard" onclick="return launchFlow('Screen_Simple_Demo');" />
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="Launch Flow Large" onclick="return launchFlow('Screen_Simple_Demo', [], 'large');" />
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="View Record" action="{!viewRecord}" />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </apex:form>
+        <div id="divFlowModal" />
+		<script>
+        var flowModalStatusChange = function(event) {
+            if (event.getParam("status") === "FINISHED") {
+                // Control what happens when the interview finishes
+                
+                
+                /*
+                var outputVariables = event.getParam("outputVariables");
+                var key;
+                for(key in outputVariables) {
+                    if(outputVariables[key].name === "myOutput") {
+                        // Do something with an output variable
+                    }
+                }  
+                */
+                
+                // alert(event.getParam("name") + 'Finished');
+            }
+        }
+		
+		var launchFlow = function(flowName, params, size) {
+            $Lightning.use("c:GuidedCPQLgtnApp", function() {
+                $Lightning.createComponent(
+                    "c:FlowModalComponent",
+                    { "flowName": flowName, "modalSize": size, "params": params },
+                    "divFlowModal",
+                    function(component) {
+                        cmpModal = component;
+                        $A.eventService.addHandler({
+                            "event": "c:FlowModalEvent",
+                            "handler": flowModalStatusChange
+                        });
+                    }
+                );
+            });
+            
+            return false;
+        }
+        </script>
+    </div>
+</apex:page>

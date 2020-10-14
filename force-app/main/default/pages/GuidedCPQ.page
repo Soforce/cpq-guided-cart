@@ -1,0 +1,10 @@
+<apex:page docType="html-5.0" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false">
+    <head>
+        <apex:slds />
+        <apex:includeLightning />
+    </head>
+    <!-- Replacement of OOTB CPQHeader -->
+    <apex:include pageName="GuidedCPQHeader" />
+    <!-- OOTB HybridCPQ -->
+    <apex:include pageName="vlocity_cmt__HybridCPQ" />
+</apex:page>

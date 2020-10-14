@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event for Flow Modal" >
+    <aura:attribute type="string" name="name" />
+    <aura:attribute type="List" name="params" />
+    <aura:attribute type="string" name="tag" />
+    <aura:attribute type="string" name="status" />
+</aura:event>

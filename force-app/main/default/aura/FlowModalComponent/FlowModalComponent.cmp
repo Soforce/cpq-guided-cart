@@ -1,0 +1,26 @@
+<aura:component  >
+	<aura:registerEvent name="FlowModalEvent" type="c:FlowModalEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:attribute name="showModal" type="boolean" default="true"/>  
+
+    <aura:attribute name="flowName" type="String" default="abc"/> 
+    <aura:attribute name="modalSize" type="String" default="small"/> 
+    <aura:attribute name="params" type="List" default="[]"/> 
+    <aura:attribute name="tag" type="String" default=""/> 
+
+    <aura:if isTrue="{!v.showModal}">
+        <section aura:id="modalSection" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{!c.hide}" alternativeText="Close" class="slds-modal__close" />
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:flow aura:id="myFlow" onstatuschange="{!c.statusChange}"/>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </aura:if>  
+</aura:component>
